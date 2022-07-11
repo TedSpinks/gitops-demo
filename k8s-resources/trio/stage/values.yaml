@@ -13,10 +13,3 @@ flask-ui:
   image:
     repository: quay.io/codefresh_sa/flask-ui
     tag: "47b7254"
-
-# tag: 13b7cb2
-# tag: 696b07f
-# tag: 5c41d13
-# tag: 7abe01c
-# tag: 310ce88
-# tag: ada05da

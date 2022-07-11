@@ -4,7 +4,6 @@ metadata:
   labels:
     app: color
   name: color
-  namespace: color
 spec:
   ports:
   - port: 80
