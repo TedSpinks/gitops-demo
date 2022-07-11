@@ -1,21 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: trio-dev
-  # namespace: csdp01-us-east-2  # All app resources live in the argocd namespace
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: trio
   labels:
     app: trio
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: trio-app
+    namespace: trio
     name: in-cluster
   project: trio
   source:
-    repoURL: https://github.com/codefresh-contrib/csdp-salesdemo_applications.git
+    repoURL: https://github.com/codefresh-contrib/cf-demo1_gitops.git
     targetRevision: main
-    path: ./helm/trio-app/dev/
+    path: ./k8s-resources/trio/dev/
     helm:
       parameters:
         - name: buildID

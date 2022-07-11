@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: color-app
+  name: color
   labels:
     app: color
   finalizers:
@@ -12,8 +12,8 @@ spec:
     name: in-cluster
   project: color
   source:
-    path: ./kustomize/color/overlays/stage
-    repoURL: https://github.com/codefresh-contrib/csdp-salesdemo_applications.git
+    path: ./k8s-resources/color/overlays/stage
+    repoURL: https://github.com/codefresh-contrib/cf-demo1_gitops.git
     targetRevision: main
   syncPolicy:
     syncOptions:
