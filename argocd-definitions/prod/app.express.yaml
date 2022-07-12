@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: express
+  name: express-prod
   labels:
-    app: express
+    app: express-prod
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: express
+    namespace: express-prod
     name: in-cluster
   project: express
   source:

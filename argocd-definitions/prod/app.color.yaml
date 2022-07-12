@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: color
+  name: color-prod
   labels:
-    app: color
+    app: color-prod
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: color
+    namespace: color-prod
     name: in-cluster
   project: color
   source:

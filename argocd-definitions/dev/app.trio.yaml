@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: trio
+  name: trio-dev
   labels:
-    app: trio
+    app: trio-dev
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: trio
+    namespace: trio-dev
     name: in-cluster
   project: trio
   source:

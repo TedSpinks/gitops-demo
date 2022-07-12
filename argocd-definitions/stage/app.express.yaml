@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: express
+  name: express-stage
   labels:
-    app: express
+    app: express-stage
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: csdp-salesdemo-stage # temporarily set to Runtime namespace, CR-10565
+    namespace: express-stage
     name: in-cluster
   project: express
   source:
