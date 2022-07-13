@@ -2,7 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
+  - ../../base
 images:
-- name: quay.io/codefresh_sa/express
-  newTag: 0f2ce7e
+  - name: quay.io/codefresh_sa/express
+    newTag: 0f2ce7e
