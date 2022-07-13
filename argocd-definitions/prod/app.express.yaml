@@ -12,7 +12,7 @@ spec:
     name: in-cluster
   project: express
   source:
-    path: ./k8s-resources/express/overlays/prod-east
+    path: ./k8s-resources/express/overlays/prod
     repoURL: https://github.com/codefresh-contrib/cf-demo1_gitops.git
     targetRevision: main
   syncPolicy:
