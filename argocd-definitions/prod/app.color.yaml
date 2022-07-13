@@ -12,7 +12,7 @@ spec:
     name: in-cluster
   project: color
   source:
-    path: ./k8s-resources/color/overlays/prod-east
+    path: ./k8s-resources/color/overlays/prod
     repoURL: https://github.com/codefresh-contrib/cf-demo1_gitops.git
     targetRevision: main
   syncPolicy:

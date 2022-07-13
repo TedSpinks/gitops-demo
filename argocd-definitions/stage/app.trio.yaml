@@ -14,7 +14,7 @@ spec:
   source:
     repoURL: https://github.com/codefresh-contrib/cf-demo1_gitops.git
     targetRevision: main
-    path: ./k8s-resources/trio/stage/
+    path: ./k8s-resources/trio/stage
     helm:
       parameters:
         - name: buildID
