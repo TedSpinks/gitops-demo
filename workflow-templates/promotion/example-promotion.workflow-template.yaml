@@ -10,9 +10,9 @@ spec:
       - name: source-environment
         value: "choose one: dev stage"
       - name: destination-environment
-        value: "choose one: stage prod-east"
+        value: "choose one: stage prod"
       - name: service-grouping
-        value: "trio-app"
+        value: "trio"
       - name: services-to-promote
         value: "flask-ui buslog ctrlr"
   templates:
@@ -49,14 +49,14 @@ spec:
                   value: "{{workflow.parameters.services-to-promote}}"
                 # Pattern Strings
                 - name: file-path-pattern
-                  value: "helm/{{workflow.parameters.service-grouping}}/[[ENV]]/values.yaml"
+                  value: "k8s-resources/{{workflow.parameters.service-grouping}}/[[ENV]]/values.yaml"
                 - name: promotion-type
                   value: helm-value
                 - name: yaml-key-pattern    # YAML key pattern within the values.yaml files
                   value: ".[[SVC_NAME]].image.tag"
 
     # Non-prod promotion goes straight to main branch
-    # Prod-east promotion goes to a branch where a PR is created
+    # prod promotion goes to a branch where a PR is created
     - name: set-commit-details
       script:
         image: alpine:latest
@@ -68,8 +68,8 @@ spec:
           SVC_LIST="{{workflow.parameters.services-to-promote}}"
           INITIATOR="{{workflow.annotations.codefresh.io/initiator}}"
           TODAY=$(date +%F-%SS)
-          if [ "${ENV_DEST}" = "prod-east" ]; then
-            BRANCH="promote/prod-east/${TODAY}"
+          if [ "${ENV_DEST}" = "prod" ]; then
+            BRANCH="promote/prod/${TODAY}"
             CREATE_PR=true
           else
             BRANCH="main"
