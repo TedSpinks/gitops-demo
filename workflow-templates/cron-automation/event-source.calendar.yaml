@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  creationTimestamp: null
+  name: calendar
+spec:
+  calendar:
+    example-with-interval:
+      interval: 3h
+      schedule: ""
+    every-minute:
+      interval: 1m
+      schedule: ""
+    every-5-minutes:
+      interval: 5m
+      schedule: ""
+    every-10-minutes:
+      interval: 10m
+      schedule: ""
+    every-15-minutes:
+      interval: 15m
+      schedule: ""
+    every-30-minutes:
+      interval: 30m
+      schedule: ""
+    every-45-minutes:
+      interval: 45m
+      schedule: ""
+    every-hour:
+      interval: 1h
+      schedule: ""
+    every-90-minutes:
+      interval: 90m
+      schedule: ""
+    every-day:
+      interval: 24h
+      schedule: ""
+  eventBusName: codefresh-eventbus
+status: {}

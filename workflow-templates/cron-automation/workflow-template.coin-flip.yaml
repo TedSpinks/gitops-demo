@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  creationTimestamp: null
+  name: coin-flip
+spec:
+  arguments:
+    parameters:
+    - name: FAIL_THRESHOLD
+  entrypoint: flip
+  podGC:
+    strategy: OnPodCompletion
+  serviceAccountName: codefresh-sa
+  templates:
+  - name: flip
+    metadata:
+      labels:
+        should-be-deleted: "true"
+    serviceAccountName: codefresh-sa
+    inputs:
+      parameters:
+      - name: FAIL_THRESHOLD # 0-9
+        value: 5
+    script:
+      image: ubuntu:latest
+      command: [ bash ]
+      source: |
+        rnd=$(od -vAn -N1 -tu2 < /dev/urandom);
+        res=$(( ${rnd} % 10 ));
+        echo "rnd: ${rnd}";
+        echo "res: ${res}";
+        if [[ ${res} -lt {{ inputs.parameters.FAIL_THRESHOLD }} ]]; then
+          echo "Yay, we passed!"
+          exit 0;
+        else
+          echo "Oh no, things failed randomly :("
+          exit 1;
+        fi
+
+
