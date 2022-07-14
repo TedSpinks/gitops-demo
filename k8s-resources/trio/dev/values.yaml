@@ -2,7 +2,7 @@ buslog:
   replicaCount: 2
   image:
     repository: quay.io/codefresh_sa/buslog
-    tag: "0f06e32"
+    tag: "e37f056"
 ctrlr:
   replicaCount: 2
   image:
