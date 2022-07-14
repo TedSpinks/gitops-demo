@@ -3,7 +3,5 @@ kind: Kustomization
 resources:
 - analysisTemplate.yaml
 - rollout.yaml
-# - deployment.yaml
 - service.yaml
 - ingress.yaml
-# - rollback.yaml  # Argo CD hooks to undo (rollback) aborted rollouts

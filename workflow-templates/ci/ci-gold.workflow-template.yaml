@@ -169,6 +169,8 @@ spec:
                   value: "k8s-resources/[[SVC_NAME]]/overlays/[[ENV]]/kustomization.yaml"
                 - name: promotion-type
                   value: kustomize-image
+                - name: kust-image-pattern
+                  value: "quay.io/codefresh_sa/[[SVC_NAME]]"
             depends: test-image
             when: |- 
               '{{inputs.parameters.IMAGE_NAME}}' == 'quay.io/codefresh_sa/color' ||
