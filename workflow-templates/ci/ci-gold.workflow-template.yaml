@@ -157,6 +157,8 @@ spec:
                   value: '{{ inputs.parameters.GITOPS_REPO_URL }}'
                 - name: git-auth-secret
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                - name: git-commit-msg
+                  value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
                 # Replacement Substrings
                 - name: value-to-promote
                   value: '{{ inputs.parameters.IMAGE_TAG }}'
@@ -187,6 +189,8 @@ spec:
                   value: '{{ inputs.parameters.GITOPS_REPO_URL }}'
                 - name: git-auth-secret
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                - name: git-commit-msg
+                  value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
                 # Replacement Substrings
                 - name: value-to-promote
                   value: '{{ inputs.parameters.IMAGE_TAG }}'
