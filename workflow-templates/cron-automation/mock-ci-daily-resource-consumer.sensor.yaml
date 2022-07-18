@@ -1,24 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: cron
+  name: mock-ci-daily-resource-consumer
 spec:
   dependencies:
-  - eventName: example-with-interval
-    eventSourceName: calendar
-    name: calendar-dep
-  - eventName: every-45-minutes
-    eventSourceName: calendar
-    name: every-45-minutes
-  - eventName: every-5-minutes
-    eventSourceName: calendar
-    name: every-5-minutes
-  - eventName: every-10-minutes
-    eventSourceName: calendar
-    name: every-10-minutes
-  - eventName: every-15-minutes
-    eventSourceName: calendar
-    name: every-15-minutes
   - eventName: every-day
     eventSourceName: calendar
     name: every-day

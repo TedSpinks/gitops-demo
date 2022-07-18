@@ -1,0 +1,201 @@
+# Randomly chooses from a list of tags for 4 images: express, buslog, ctrlr, flask-ui
+# Promotes the new tags in the GitOps repo via kustomize (express) and helm values (buslog, ctrlr, flask-ui)
+# Waits 5 minutes between each promotion to prevent an issue where simultaneous commits appear on the wrong
+#   CSDP application dashboard. Track this issue in: CR-12639.
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: generate-cd-traffic
+spec:
+  serviceAccountName: ci-gold # re-use existing service account with minimal Workflows permissions
+  entrypoint: traffic
+  templates:
+    - name: traffic
+      inputs:
+        parameters:
+          - name: GITOPS_REPO_URL
+            default: "https://github.com/codefresh-contrib/cf-demo1_gitops.git"
+          - name: GIT_TOKEN_SECRET
+            default: github-token
+          - name: ENV
+            default: dev
+      dag:
+        tasks:
+
+          - name: randomly-choose-tags
+            template: randomly-choose-tags
+          - name: promote-kustomize-express
+            templateRef:
+              name: argo-hub.gitops-promotion.0.0.1
+              template: promote-to-env
+            # Allow failures in case of an empty commit when new tag is the same as the previous tag
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                # Git
+                - name: git-repo-url
+                  value: '{{ inputs.parameters.GITOPS_REPO_URL }}'
+                - name: git-auth-secret
+                  value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                # Replacement Substrings
+                - name: value-to-promote
+                  value: '{{tasks.randomly-choose-tags.outputs.parameters.express-tag}}'
+                - name: env
+                  value: '{{ inputs.parameters.ENV }}'
+                - name: svc-name-list
+                  value: "express"
+                # Pattern Strings
+                - name: file-path-pattern
+                  value: "k8s-resources/express/overlays/[[ENV]]/kustomization.yaml"
+                - name: promotion-type
+                  value: kustomize-image
+                - name: kust-image-pattern
+                  value: "quay.io/codefresh_sa/express"
+            # Using dependencies instead of depends for compatibility with continueOn
+            dependencies: ["randomly-choose-tags"]
+          - name: wait-for-express
+            template: sleep-5-min
+            # Using dependencies instead of depends for compatibility with continueOn
+            dependencies: ["promote-kustomize-express"]
+          - name: promote-helm-buslog
+            templateRef:
+              name: argo-hub.gitops-promotion.0.0.1
+              template: promote-to-env
+            # Allow failures in case of an empty commit when new tag is the same as the previous tag
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                # Git
+                - name: git-repo-url
+                  value: '{{ inputs.parameters.GITOPS_REPO_URL }}'
+                - name: git-auth-secret
+                  value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                # Replacement Substrings
+                - name: value-to-promote
+                  value: '{{tasks.randomly-choose-tags.outputs.parameters.buslog-tag}}'
+                - name: env
+                  value: '{{ inputs.parameters.ENV }}'
+                - name: svc-name-list
+                  value: "buslog"
+                # Pattern Strings
+                - name: file-path-pattern
+                  value: "k8s-resources/trio/[[ENV]]/values.yaml"
+                - name: promotion-type
+                  value: helm-value
+                - name: yaml-key-pattern    # YAML key pattern within the values.yaml files
+                  value: ".[[SVC_NAME]].image.tag"
+            # Using dependencies instead of depends for compatibility with continueOn
+            dependencies: ["wait-for-express"]
+          - name: wait-for-buslog
+            template: sleep-5-min
+            # Using dependencies instead of depends for compatibility with continueOn
+            dependencies: ["promote-helm-buslog"]
+          - name: promote-helm-ctrlr
+            templateRef:
+              name: argo-hub.gitops-promotion.0.0.1
+              template: promote-to-env
+            # Allow failures in case of an empty commit when new tag is the same as the previous tag
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                # Git
+                - name: git-repo-url
+                  value: '{{ inputs.parameters.GITOPS_REPO_URL }}'
+                - name: git-auth-secret
+                  value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                # Replacement Substrings
+                - name: value-to-promote
+                  value: '{{tasks.randomly-choose-tags.outputs.parameters.ctrlr-tag}}'
+                - name: env
+                  value: '{{ inputs.parameters.ENV }}'
+                - name: svc-name-list
+                  value: "ctrlr"
+                # Pattern Strings
+                - name: file-path-pattern
+                  value: "k8s-resources/trio/[[ENV]]/values.yaml"
+                - name: promotion-type
+                  value: helm-value
+                - name: yaml-key-pattern    # YAML key pattern within the values.yaml files
+                  value: ".[[SVC_NAME]].image.tag"
+            # Using dependencies instead of depends for compatibility with continueOn
+            dependencies: ["wait-for-buslog"]
+          - name: wait-for-ctrlr
+            template: sleep-5-min
+            # Using dependencies instead of depends for compatibility with continueOn
+            dependencies: ["promote-helm-ctrlr"]
+          - name: promote-helm-flask-ui
+            templateRef:
+              name: argo-hub.gitops-promotion.0.0.1
+              template: promote-to-env
+            # Allow failures in case of an empty commit when new tag is the same as the previous tag
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                # Git
+                - name: git-repo-url
+                  value: '{{ inputs.parameters.GITOPS_REPO_URL }}'
+                - name: git-auth-secret
+                  value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                # Replacement Substrings
+                - name: value-to-promote
+                  value: '{{tasks.randomly-choose-tags.outputs.parameters.flask-ui-tag}}'
+                - name: env
+                  value: '{{ inputs.parameters.ENV }}'
+                - name: svc-name-list
+                  value: "flask-ui"
+                # Pattern Strings
+                - name: file-path-pattern
+                  value: "k8s-resources/trio/[[ENV]]/values.yaml"
+                - name: promotion-type
+                  value: helm-value
+                - name: yaml-key-pattern    # YAML key pattern within the values.yaml files
+                  value: ".[[SVC_NAME]].image.tag"
+            # Using dependencies instead of depends for compatibility with continueOn
+            dependencies: ["wait-for-ctrlr"]
+
+    - name: randomly-choose-tags
+      script:
+        image: ubuntu:latest
+        command: [bash]
+        source: |
+          declare -a express_tags=("5416e81" "a621cc7" "274cd50" "a6269f1" "9ebf646" "a99518b")
+          declare -a buslog_tags=("4ed1e59" "111a75a" "e37f056" "0f06e32" "16c937a" "55d6009")
+          declare -a ctrlr_tags=("2b6d88e" "2d4d04f" "570e2a2" "6eebbb0" "af07e54" "8aa7e29")
+          declare -a flask_ui_tags=("f3c1948" "1b8d478" "577b34a" "4b49dde" "554232f" "b7c2aa4")
+          RANDOM=$(date +%s)
+          express_tag=${express_tags[ $RANDOM % ${#express_tags[@]} ]}
+          echo "New express tag: ${express_tag}"
+          echo "${express_tag}" > /tmp/express-tag.txt
+          buslog_tag=${buslog_tags[ $RANDOM % ${#buslog_tags[@]} ]}
+          echo "New buslog tag: ${buslog_tag}"
+          echo "${buslog_tag}" > /tmp/buslog-tag.txt
+          ctrlr_tag=${ctrlr_tags[ $RANDOM % ${#ctrlr_tags[@]} ]}
+          echo "New ctrlr tag: ${ctrlr_tag}"
+          echo "${ctrlr_tag}" > /tmp/ctrlr-tag.txt
+          flask_ui_tag=${flask_ui_tags[ $RANDOM % ${#flask_ui_tags[@]} ]}
+          echo "New flask-ui tag: ${flask_ui_tag}"
+          echo "${flask_ui_tag}" > /tmp/flask-ui-tag.txt
+      outputs:
+        parameters:
+          - name: express-tag
+            valueFrom:
+              path: /tmp/express-tag.txt
+          - name: buslog-tag
+            valueFrom:
+              path: /tmp/buslog-tag.txt
+          - name: ctrlr-tag
+            valueFrom:
+              path: /tmp/ctrlr-tag.txt
+          - name: flask-ui-tag
+            valueFrom:
+              path: /tmp/flask-ui-tag.txt
+    - name: sleep-5-min
+      container:
+        image: alpine:latest
+        command: [sh, -c]
+        args: ["sleep 300"]

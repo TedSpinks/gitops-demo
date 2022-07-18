@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
   creationTimestamp: null
-  name: cron-coin-flip
+  name: coin-flip
 spec:
   dependencies:
   - eventName: every-30-minutes
