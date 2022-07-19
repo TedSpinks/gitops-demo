@@ -7,9 +7,6 @@ declare -a ctrlr_tags=("2b6d88e" "2d4d04f" "570e2a2" "6eebbb0" "af07e54" "8aa7e2
 declare -a flask_ui_tags=("f3c1948" "1b8d478" "577b34a" "4b49dde" "554232f" "b7c2aa4")
 
 # Choose a random tag from each list
-#RANDOM=$(date +%s)
-echo Random $RANDOM
-echo Random $RANDOM 
 cf_export EXPRESS_TAG=${express_tags[ $RANDOM % ${#express_tags[@]} ]}
 cf_export BUSLOG_TAG=${buslog_tags[ $RANDOM % ${#buslog_tags[@]} ]}
 cf_export CTRLR_TAG=${ctrlr_tags[ $RANDOM % ${#ctrlr_tags[@]} ]}
