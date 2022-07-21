@@ -5,4 +5,4 @@ resources:
   - ../../base
 images:
   - name: quay.io/codefresh_sa/express
-    newTag: 274cd50
+    newTag: a6269f1
