@@ -7,9 +7,9 @@ ctrlr:
   replicaCount: 2
   image:
     repository: quay.io/codefresh_sa/ctrlr
-    tag: "af07e54"
+    tag: "2b6d88e"
 flask-ui:
   replicaCount: 3
   image:
     repository: quay.io/codefresh_sa/flask-ui
-    tag: "4b49dde"
+    tag: "f3c1948"
