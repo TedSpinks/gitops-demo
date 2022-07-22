@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/whitelist-source-range: "47.220.181.191/32"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "47.220.181.191/32,97.70.172.210/32"
   labels:
     app.kubernetes.io/instance: color
   name: color
