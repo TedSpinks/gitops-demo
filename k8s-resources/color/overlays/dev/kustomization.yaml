@@ -17,5 +17,5 @@ patches:
       kind: Ingress
       name: color
 images:
-  - name: quay.io/codefresh_sa/color-service
+  - name: quay.io/codefresh_sa/color
     newTag: "6b58751" # green
