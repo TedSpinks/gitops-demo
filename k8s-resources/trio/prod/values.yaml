@@ -12,4 +12,4 @@ flask-ui:
   replicaCount: 3
   image:
     repository: quay.io/codefresh_sa/flask-ui
-    tag: "4b49dde"
+    tag: "1b8d478"
