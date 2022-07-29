@@ -18,4 +18,4 @@ patches:
       name: color
 images:
   - name: quay.io/codefresh_sa/color
-    newTag: green
+    newTag: d39ef0a
