@@ -18,4 +18,4 @@ configMapGenerator:
 #       name: color
 images:
   - name: quay.io/tedspinks/color
-    newTag: "3ddd0c0" # green
+    newTag: "d1d8f6e" # green
