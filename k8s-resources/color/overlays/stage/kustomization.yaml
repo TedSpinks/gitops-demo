@@ -6,16 +6,16 @@ configMapGenerator:
 - name: color-config
   literals:
   - COLOR1=yellow
-patches:
-  - patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: demo1-stage.sa.cf-cd.com
-    target:
-      group: networking.k8s.io
-      version: v1
-      kind: Ingress
-      name: color
+# patches:
+#   - patch: |-
+#       - op: replace
+#         path: /spec/rules/0/host
+#         value: demo1-stage.sa.cf-cd.com
+#     target:
+#       group: networking.k8s.io
+#       version: v1
+#       kind: Ingress
+#       name: color
 images:
-  - name: quay.io/codefresh_sa/color
+  - name: quay.io/tedspinks/color
     newTag: red
