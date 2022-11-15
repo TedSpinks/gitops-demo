@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: color-prod
+  namespace: argocd
   labels:
     app: color-prod
   finalizers:

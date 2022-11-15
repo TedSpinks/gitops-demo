@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: color-dev
+  namespace: argocd
   labels:
     app: color-dev
   finalizers:
