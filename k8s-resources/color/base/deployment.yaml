@@ -18,7 +18,7 @@ spec:
         app: color
     spec:
       containers:
-      - image: quay.io/codefresh_sa/color:0049767
+      - image: quay.io/tedspinks/color:0049767
         imagePullPolicy: Always
         name: color-service
         env:
