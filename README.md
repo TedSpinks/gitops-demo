@@ -1,5 +1,6 @@
 # cf-demo1_gitops
 
+[![GitHub Super-Linter](https://github.com/TedSpinks/cf-demo1_gitops/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 GitOps repo for deploying the microservices that are stored in repo [cf-demo1](https://github.com/codefresh-contrib/cf-demo1).
 
 Directories include:
