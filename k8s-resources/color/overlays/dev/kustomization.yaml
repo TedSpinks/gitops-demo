@@ -6,16 +6,7 @@ configMapGenerator:
 - name: color-config
   literals:
   - COLOR1=orange
-patches:
-  - patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 10
-    target:
-      group: apps
-      version: v1
-      kind: Deployment
-      name: color
+# patches:
 #   - patch: |-
 #       - op: replace
 #         path: /spec/rules/0/host
