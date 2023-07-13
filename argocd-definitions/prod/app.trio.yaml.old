@@ -1,20 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: trio-stage
+  name: trio-prod
   labels:
-    app: trio-stage
+    app: trio-prod
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: trio-stage
+    namespace: trio-prod
     name: in-cluster
   project: trio
   source:
-    repoURL: https://github.com/codefresh-contrib/cf-demo1_gitops.git
+    repoURL: https://github.com/TedSpinks/gitops-demo.git
     targetRevision: main
-    path: ./k8s-resources/trio/stage
+    path: ./k8s-resources/trio/prod
     helm:
       parameters:
         - name: buildID

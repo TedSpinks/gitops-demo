@@ -13,7 +13,7 @@ spec:
   project: express
   source:
     path: ./k8s-resources/express/overlays/dev
-    repoURL: https://github.com/codefresh-contrib/cf-demo1_gitops.git
+    repoURL: https://github.com/TedSpinks/gitops-demo.git
     targetRevision: main
   syncPolicy:
     syncOptions:

@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - ../../base
 images:
-  - name: quay.io/codefresh_sa/express
+  - name: quay.io/tedspinks/express
     newTag: "9ebf646"

@@ -1,20 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-dev
+  name: trio-stage
   labels:
-    app: prometheus-dev
+    app: trio-stage
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: monitoring
+    namespace: trio-stage
     name: in-cluster
-  project: express
+  project: trio
   source:
-    path: ./k8s-resources/prometheus/overlays/dev
-    repoURL: https://github.com/codefresh-contrib/cf-demo1_admin.git
+    repoURL: https://github.com/TedSpinks/gitops-demo.git
     targetRevision: main
+    path: ./k8s-resources/trio/stage
+    helm:
+      parameters:
+        - name: buildID
+          value: argocd
+      valueFiles:
+        - values.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

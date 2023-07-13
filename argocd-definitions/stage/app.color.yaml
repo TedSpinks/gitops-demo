@@ -14,7 +14,7 @@ spec:
   project: color
   source:
     path: ./k8s-resources/color/overlays/stage
-    repoURL: https://github.com/TedSpinks/cf-demo1_gitops.git
+    repoURL: https://github.com/TedSpinks/gitops-demo.git
     targetRevision: main
   syncPolicy:
     syncOptions:
