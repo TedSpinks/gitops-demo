@@ -13,7 +13,7 @@ spec:
   project: trio
   source:
     repoURL: https://github.com/TedSpinks/gitops-demo.git
-    targetRevision: main
+    targetRevision: openshift
     path: ./k8s-resources/trio/stage
     helm:
       parameters:

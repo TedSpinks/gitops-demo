@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: color-stage
-  namespace: argocd
+  namespace: openshift-gitops
   labels:
     app: color-stage
   finalizers:
@@ -15,7 +15,7 @@ spec:
   source:
     path: ./k8s-resources/color/overlays/stage
     repoURL: https://github.com/TedSpinks/gitops-demo.git
-    targetRevision: main
+    targetRevision: openshift
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

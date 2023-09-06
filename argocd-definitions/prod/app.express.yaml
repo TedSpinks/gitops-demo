@@ -14,7 +14,7 @@ spec:
   source:
     path: ./k8s-resources/express/overlays/prod
     repoURL: https://github.com/TedSpinks/gitops-demo.git
-    targetRevision: main
+    targetRevision: openshift
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
